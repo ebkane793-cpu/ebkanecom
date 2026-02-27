@@ -206,4 +206,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 12. INITIAL RENDER
     refreshView();
+
+    // 13. HOVER IMAGE SHUFFLE
+    document.querySelectorAll('.project-image[data-hover-images]').forEach(img => {
+        const images = img.getAttribute('data-hover-images').split(',');
+        if (images.length <= 1) return;
+        const FADE = 200;
+        const HOLD = 600;
+        let interval = null;
+        let idx = 0;
+        img.style.transition = `opacity ${FADE}ms ease, filter 0.6s ease, transform 0.6s ease`;
+        const card = img.closest('.project-card-link');
+        card.addEventListener('mouseenter', () => {
+            idx = 0;
+            interval = setInterval(() => {
+                img.style.opacity = '0';
+                setTimeout(() => {
+                    idx = (idx + 1) % images.length;
+                    img.src = images[idx];
+                    img.style.opacity = '1';
+                }, FADE);
+            }, HOLD + FADE * 2);
+        });
+        card.addEventListener('mouseleave', () => {
+            clearInterval(interval);
+            interval = null;
+            img.style.opacity = '0';
+            setTimeout(() => {
+                img.src = images[0];
+                img.style.opacity = '1';
+            }, FADE);
+        });
+    });
 });
