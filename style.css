@@ -397,11 +397,12 @@ h2 {
 }
 
 .load-more-container {
-    text-align: center;
+    width: 100%;
     margin-top: 50px;
     padding-bottom: 50px;
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 16px;
 }
 
