@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!videoPlayer || currentGroup.length === 0) return;
         const videoURL = currentGroup[currentIndex].getAttribute('data-video');
         const sep = videoURL.includes('?') ? '&' : '?';
-        videoPlayer.src = `${videoURL}${sep}autoplay=1&rel=0`;
+        videoPlayer.src = `${videoURL}${sep}autoplay=1&rel=0&modestbranding=1`;
 
         const next = document.getElementById('nextVid');
         const prev = document.getElementById('prevVid');
