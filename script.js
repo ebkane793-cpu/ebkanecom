@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     const projectLinks = document.querySelectorAll('.project-card-link');
     // We select only the category filters, excluding the Load More button
-    const categoryBtns = document.querySelectorAll('.filter-btn:not(#loadMoreBtn)');
+    const categoryBtns = document.querySelectorAll('.filter-btn:not(#loadMoreBtn):not(#backToTopBtn)');
     const lightbox = document.getElementById('videoLightbox');
     const videoPlayer = document.getElementById('videoPlayer');
     const indicatorContainer = document.getElementById('videoIndicators');
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. THE REFRESH FUNCTION
     function refreshView() {
         // Find which category is actually selected
-        const activeBtn = document.querySelector('.filter-btn.active:not(#loadMoreBtn)') || categoryBtns[0];
+        const activeBtn = document.querySelector('.filter-btn.active:not(#loadMoreBtn):not(#backToTopBtn)') || categoryBtns[0];
         const currentFilter = activeBtn.getAttribute('data-filter');
         
         let matchCount = 0;
