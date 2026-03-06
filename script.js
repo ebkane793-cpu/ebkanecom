@@ -207,7 +207,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // 12. INITIAL RENDER
     refreshView();
 
-    // 13. HOVER IMAGE SHUFFLE
+    // 13. TYPEWRITER EFFECT
+    const heroH2 = document.querySelector('.glitch-text');
+    if (heroH2) {
+        const text = heroH2.getAttribute('data-text') || heroH2.textContent;
+        heroH2.textContent = '';
+        let i = 0;
+        const cursor = document.createElement('span');
+        cursor.className = 'type-cursor';
+        heroH2.appendChild(cursor);
+        const type = () => {
+            if (i < text.length) {
+                heroH2.insertBefore(document.createTextNode(text[i]), cursor);
+                i++;
+                setTimeout(type, 80);
+            } else {
+                cursor.classList.add('done');
+            }
+        };
+        setTimeout(type, 300);
+    }
+
+    // 14. SCROLL REVEAL
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // 15. HOVER IMAGE SHUFFLE
     document.querySelectorAll('.project-image[data-hover-images]').forEach(img => {
         const images = img.getAttribute('data-hover-images').split(',');
         if (images.length <= 1) return;
@@ -239,3 +270,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// SCISSORS CURSOR
+(function() {
+    const cursor = document.getElementById('custom-cursor');
+    if (!cursor) return;
+
+    // Only activate on non-touch devices
+    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+
+    let mx = -100, my = -100;
+
+    document.addEventListener('mousemove', (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        cursor.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+        cursor.style.opacity = '1';
+    });
+
+    document.addEventListener('mousedown', () => cursor.classList.add('cutting'));
+    document.addEventListener('mouseup', () => cursor.classList.remove('cutting'));
+
+    document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
+})();
